@@ -1,0 +1,5 @@
+src/app/__pycache__
+.pytest_cache
+.ruff_cache
+
+*__pycache__*
