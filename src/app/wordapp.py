@@ -33,7 +33,7 @@ class WordApp:
         self.sentence = set(map(lambda x: x.lower(), sentence))
         return self.sentence
 
-    def get_longest_word(self) -> str | tuple(str, str):
+    def get_longest_word(self) -> str | tuple[str, str]:
         """Checks for the longest words in the sentence.
 
         Return: a tuple of list of the longest words and the length of each word
@@ -42,17 +42,15 @@ class WordApp:
         if self.sentence is None:
             return "No word"
 
-        if len(self.sentence) == 0:
+        if not self.sentence:
             return "No word"
 
         longest_value = max(list(map(lambda x: len(x), self.sentence)))
-        matching_words = set(
-            filter(lambda f: len(f) == longest_value, self.sentence)
-        )
+        matching_words = set(filter(lambda f: len(f) == longest_value, self.sentence))
 
         return (matching_words, longest_value)
 
-    def get_shortest_word(self) -> str | tuple(str, str):
+    def get_shortest_word(self) -> str | tuple[str, str]:
         """Get the shortest word(s) and the length of such word(s).
         :returns a list of shortest words and the length of the shortest word
         """
@@ -60,7 +58,7 @@ class WordApp:
         if self.sentence is None:
             return "No word"
 
-        if len(self.sentence) == 0:
+        if not self.sentence:
             return "No word"
 
         shortest_value = min(set(map(lambda x: len(x.strip()), self.sentence)))
@@ -80,7 +78,7 @@ class WordApp:
 @dataclass_json
 @dataclass
 class Result(BaseModel):
-    words: list
+    words: list | None
     word_length: int
 
 
@@ -109,7 +107,8 @@ def get_words_by_length(check_type: str, sentence: str = None) -> dict:
     if check_type == "shortest":
         results = word_app.get_shortest_word()
 
-    if check_type is None or check_type not in ["longest", "shortest"]:
+    # if check_type is None or check_type not in ["longest", "shortest"]:
+    if check_type not in ["longest", "shortest"]:
         results = "No Type specified"
 
     if "No word" in results:
