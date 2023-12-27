@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from loguru import logger
+from .utils import print_to_console as pc
 
 
 class WordApp:
@@ -47,6 +48,7 @@ class WordApp:
 
         longest_value = max(list(map(lambda x: len(x), self.sentence)))
         matching_words = set(filter(lambda f: len(f) == longest_value, self.sentence))
+        pc.console_words(matching_words, longest_value)
 
         return (matching_words, longest_value)
 
@@ -68,7 +70,7 @@ class WordApp:
                 self.sentence,
             )
         )
-
+        pc.console_words(matching_words, shortest_value)
         return (matching_words, shortest_value)
 
 
